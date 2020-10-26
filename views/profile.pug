@@ -9,6 +9,7 @@ block contents
             span(aria-hidden='true') &times;
     .row
       .col-sm-12.col-md-12.col-lg-8
+        //- create a blog form
         form(action="/blog/create" method="post")
           .form-group
             label(for="title") Title: 
@@ -21,6 +22,7 @@ block contents
             textarea#summernote(name="content" required)
           button.btn.btn-success Submit  
       .col-sm-12.col-md-12.col-lg-4.mt-3
+        //- profile info card
         .card
           .card-body
             h5.card-title Profile
@@ -32,6 +34,7 @@ block contents
             br 
             small Created: 
               span.text-muted #{currentUser.createdAt}
+        //- reset profile form 
         .card.mt-3.mb-3
           .card-body 
             form.mt-3(action="/profile/update", method="post")
