@@ -1,0 +1,22 @@
+extends template.pug
+block contents
+  .container
+    if sucessess
+      each success in sucessess
+        .alert.alert-success.alert-dismissible.fade.show(role='alert')
+          | #{success}
+          button.close(type='button' data-dismiss='alert' aria-label='Close')
+            span(aria-hidden='true') &times;
+    form(action="/blog/create" method="post")
+      .form-group
+        label(for="title") Title: 
+        input.form-control#title(name="title" required autofocus)
+        input(name="id" hidden value=`${currentUser._id}`)
+      .form-group
+        label(for="description") Description:
+        textarea#description.form-control(name="description", cols="30", rows="3")
+      .form-group
+        textarea#summernote(name="content" required)
+      button.btn.btn-success Submit
+block scripts
+  script(src="script.js")

@@ -1,0 +1,18 @@
+#exampleModal2.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Sign up
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body
+        label(for="")
+        form(action="/signup" method="post")
+          .form-group
+            label.col-form-label(for='username') Username:
+            input#username.form-control(type='text' name="username" required  autofocus)
+          .form-group
+            label.col-form-label(for='password') Password:
+            input#password.form-control(type="password" name="password" minlength="6" required)
+          button.btn.btn-success(type='submit') Signup
+        hr

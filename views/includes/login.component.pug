@@ -1,0 +1,18 @@
+#exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Login
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body
+        label(for="")
+        form(action="/login" method="post")
+          .form-group
+            label.col-form-label(for='lusername') Username:
+            input#lusername.form-control(type='text' name="username" required  autofocus)
+          .form-group
+            label.col-form-label(for='lpassword') Password:
+            input#lpassword.form-control(type="password" name="password" minlength="6" required)
+          button.btn.btn-primary(type='submit') Login
+        hr
