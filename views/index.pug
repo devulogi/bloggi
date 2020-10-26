@@ -2,28 +2,28 @@ extends template.pug
 block contents
   include includes/login.component.pug
   include includes/signup.component.pug
-  .container
-    if errors
-      each error in errors
-        .alert.alert-warning.alert-dismissible.fade.show(role='alert')
-          | #{error}
-          button.close(type='button' data-dismiss='alert' aria-label='Close')
-            span(aria-hidden='true') &times;
-    if infos
-      each info in infos
-        .alert.alert-info.alert-dismissible.fade.show(role='alert')
-          | #{error}
-          button.close(type='button' data-dismiss='alert' aria-label='Close')
-            span(aria-hidden='true') &times;
-    if blogs
-      each blog in blogs
-        .card
-          .card-body
-            .card-title
-              h5.mt-0 #{blog.title}
-              small.text-muted Author: #{blog.author.username}
-            .card-text
-              | #{blog.description}
+  if errors
+    each error in errors
+      .alert.alert-warning.alert-dismissible.fade.show(role='alert')
+        | #{error}
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+          span(aria-hidden='true') &times;
+  if infos
+    each info in infos
+      .alert.alert-info.alert-dismissible.fade.show(role='alert')
+        | #{error}
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+          span(aria-hidden='true') &times;
+  if blogs
+    each blog in blogs
+      .card
+        .card-body
+          .card-title
+            h5.mt-0 
+              a.text-dark(href=`/blog/${blog._id}`) #{blog.title}
+            small.font-italic.text-muted Author: #{blog.author.username}
+          .card-text
+            | #{blog.description}
 
 
 
