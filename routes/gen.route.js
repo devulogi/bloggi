@@ -3,6 +3,7 @@ const passport = require("passport");
 const {
   index,
   profile,
+  blog,
   createBlog,
   signup,
   logout,
@@ -28,6 +29,8 @@ router.use(function (req, res, next) {
 router.get("/", index);
 
 router.get("/profile", checkAuthentication, profile);
+
+router.get("/blog/:id", checkAuthentication, blog);
 
 router.post("/blog/create", createBlog);
 
