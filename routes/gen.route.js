@@ -30,7 +30,7 @@ router.get("/", index);
 
 router.get("/profile", checkAuthentication, profile);
 
-router.get("/blog/:id", checkAuthentication, blog);
+router.get("/blog/:id", blog);
 
 router.post("/blog/create", createBlog);
 
