@@ -18,6 +18,19 @@ const profile = function (req, res) {
   res.render("profile");
 };
 
+const blog = function (req, res, next) {
+  Blog.findOne({ _id: req.params.id }, function (err, blog) {
+    if (err) {
+      return next(err);
+    }
+    if (!blog) {
+      req.flash("error", "Ops! Resource not found");
+      return res.redirect("/");
+    }
+    res.render("blog", { blog });
+  });
+};
+
 const createBlog = function (req, res, next) {
   const { title, content, description, id } = req.body;
   User.findOne({ _id: id }, function (err, user) {
@@ -26,10 +39,11 @@ const createBlog = function (req, res, next) {
     }
     const newBlog = new Blog({ title, content, description });
     newBlog.author = user;
-    newBlog.save(function (err, blog) {
+    newBlog.save(async function (err, blog) {
       if (err) {
         return next(err);
       }
+      await user.blogs.push(blog);
       req.flash("success", "Horrayyy! New blog create!");
       res.redirect("/profile");
     });
@@ -58,6 +72,7 @@ const logout = function (req, res) {
 module.exports = {
   index,
   profile,
+  blog,
   createBlog,
   signup,
   logout,
