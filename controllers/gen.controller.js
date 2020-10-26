@@ -14,8 +14,37 @@ const index = function (req, res, next) {
     });
 };
 
-const profile = function (req, res) {
-  res.render("profile");
+const profile = function (req, res, next) {
+  User.findOne({ _id: res.locals.currentUser })
+    .populate("blogs")
+    .then(function (user) {
+      res.render("profile", { blogs: user.blogs });
+    })
+    .catch(function (err) {
+      next(err);
+    });
+};
+
+const updateProfile = function (req, res, next) {
+  User.findOne({ username: req.body.username }, function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (user) {
+      req.flash("error", "Username already exist.");
+      return res.redirect("/");
+    }
+    User.findOneAndUpdate({ _id: req.params.id }, req.body, function (
+      err,
+      user
+    ) {
+      if (err) {
+        return next(err);
+      }
+      req.flash("info", "Update successful!");
+      res.redirect("/profile");
+    });
+  });
 };
 
 const blog = function (req, res, next) {
@@ -33,21 +62,22 @@ const blog = function (req, res, next) {
 
 const createBlog = function (req, res, next) {
   const { title, content, description, id } = req.body;
-  User.findOne({ _id: id }, function (err, user) {
+  User.findOne({ _id: id }, async function (err, user) {
     if (err) {
       return next(err);
     }
     const newBlog = new Blog({ title, content, description });
     newBlog.author = user;
-    newBlog.save(async function (err, blog) {
-      if (err) {
-        return next(err);
-      }
-      await user.blogs.push(blog);
-      req.flash("success", "Horrayyy! New blog create!");
+    user.blogs.push(newBlog);
+    Promise.all([newBlog.save(), user.save()]).then(function () {
+      req.flash("success", "Horrayyy!");
       res.redirect("/profile");
     });
   });
+};
+
+const updateBlog = function (req, res, next) {
+  res.send(req.body.blogID);
 };
 
 const signup = function (req, res, next) {
@@ -72,8 +102,10 @@ const logout = function (req, res) {
 module.exports = {
   index,
   profile,
+  updateProfile,
   blog,
   createBlog,
+  updateBlog,
   signup,
   logout,
 };

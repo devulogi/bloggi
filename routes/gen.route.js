@@ -3,8 +3,10 @@ const passport = require("passport");
 const {
   index,
   profile,
+  updateProfile,
   blog,
   createBlog,
+  updateBlog,
   signup,
   logout,
 } = require("../controllers/gen.controller");
@@ -15,6 +17,8 @@ router.use(routerMiddleware);
 router.get("/", index);
 
 router.get("/profile", checkAuthentication, profile);
+
+router.post("/profile/update/:id", updateProfile);
 
 router.get("/blog/:id", blog);
 

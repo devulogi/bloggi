@@ -2,16 +2,39 @@ extends template.pug
 block contents
   include includes/login.component.pug
   include includes/signup.component.pug
-  if blogs
-    each blog in blogs
-      .card.mt-2.bt-2
-        .card-body
-          .card-title
-            h5.mt-0 
-              a.text-dark(href=`/blog/${blog._id}`) #{blog.title}
-            small.font-italic.text-muted Author: #{blog.author.username}
-          .card-text
-            | #{blog.description}
-
-
-
+  .row
+    if currentUser
+      .col-sm-12.col-md-12.col-lg-4.mt-2
+          //- profile info card
+          .card
+            .card-body
+              h5.card-title Profile
+              small.text-dark Username: 
+                span.text-muted #{currentUser.username}
+              br
+              small.text-dark Status: 
+                span.text-success Active
+              br 
+              small Created: 
+                span.text-muted #{currentUser.createdAt}
+      .col-sm-12.col-md-12.col-lg-8
+        each blog in blogs
+            .card.mt-2.bt-2
+              .card-body
+                .card-title
+                  h5.mt-0 
+                    a.text-dark(href=`/blog/${blog._id}`) #{blog.title}
+                  small.text-muted Author: #{blog.author.username}
+                .card-text
+                  | #{blog.description}
+    else
+      .col-sm-12.col-md-12.col-lg-12
+          each blog in blogs
+              .card.mt-2.bt-2
+                .card-body
+                  .card-title
+                    h5.mt-0 
+                      a.text-dark(href=`/blog/${blog._id}`) #{blog.title}
+                    small.text-muted Author: #{blog.author.username}
+                  .card-text
+                    | #{blog.description}

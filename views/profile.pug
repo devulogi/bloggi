@@ -22,27 +22,22 @@ block contents
             textarea#summernote(name="content" required)
           button.btn.btn-success Submit  
       .col-sm-12.col-md-12.col-lg-4.mt-3
-        //- profile info card
-        .card
-          .card-body
-            h5.card-title Profile
-            small.text-dark Username: 
-              span.text-muted #{currentUser.username}
-            br
-            small Status: 
-              span.text-success Active
-            br 
-            small Created: 
-              span.text-muted #{currentUser.createdAt}
         //- reset profile form 
         .card.mt-3.mb-3
           .card-body 
-            form.mt-3(action="/profile/update", method="post")
+            form.mt-3(action=`/profile/update/${currentUser._id}`, method="post")
               .form-group
                 small Username: 
                 input.form-control(name="username" required)
               .form-group
                 small Password:
-                input.form-control(name="password" required)
+                input.form-control(name="password" type="password" required)
               button.btn.btn-secondary(type="submit") Update Profile
+          //- select blog to edit 🆘
+        form.mb-3(action="/blog/update" name="blogID" method="get")
+          select.custom-select.custom-select-lg
+            if blogs
+              each blog in blogs
+                option(value=`${blog._id}`)= blog.title
+          button.mt-3.btn.btn-secondary(type="submit") Update Blog
   script(src="script.js")
