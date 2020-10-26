@@ -14,7 +14,7 @@ block contents
         input(name="id" hidden value=`${currentUser._id}`)
       .form-group
         label(for="description") Description:
-        textarea#description.form-control(name="description", cols="30", rows="3")
+        textarea#description.form-control(name="description", required, cols="30", rows="3")
       .form-group
         textarea#summernote(name="content" required)
       button.btn.btn-success Submit
