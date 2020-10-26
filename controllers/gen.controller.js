@@ -77,7 +77,8 @@ const createBlog = function (req, res, next) {
 };
 
 const updateBlog = function (req, res, next) {
-  res.send(req.body.blogID);
+  console.log(req.body.blogID);
+  res.send("hi");
 };
 
 const signup = function (req, res, next) {

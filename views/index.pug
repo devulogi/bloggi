@@ -29,6 +29,7 @@ block contents
                   | #{blog.description}
     else
       .col-sm-12.col-md-12.col-lg-12
+          include includes/flash.component.pug
           each blog in blogs
               .card.mt-2.bt-2
                 .card-body

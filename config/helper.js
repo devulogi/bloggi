@@ -1,4 +1,7 @@
 module.exports = {
+  pageNotFound: function (req, res, next) {
+    res.send("Page not found!");
+  },
   checkAuthentication: function (req, res, next) {
     if (req.isAuthenticated()) {
       next();

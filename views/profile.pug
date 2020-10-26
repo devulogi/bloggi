@@ -1,12 +1,7 @@
 extends template.pug
 block contents
   .container
-    if sucessess
-      each success in sucessess
-        .alert.alert-success.alert-dismissible.fade.show(role='alert')
-          | #{success}
-          button.close(type='button' data-dismiss='alert' aria-label='Close')
-            span(aria-hidden='true') &times;
+    include includes/flash.component.pug
     .row
       .col-sm-12.col-md-12.col-lg-8
         //- create a blog form
@@ -34,8 +29,8 @@ block contents
                 input.form-control(name="password" type="password" required)
               button.btn.btn-secondary(type="submit") Update Profile
           //- select blog to edit 🆘
-        form.mb-3(action="/blog/update" name="blogID" method="get")
-          select.custom-select.custom-select-lg
+        form.mb-3(action="/blog/update"  method="post")
+          select.custom-select.custom-select-lg(name="blogID")
             if blogs
               each blog in blogs
                 option(value=`${blog._id}`)= blog.title

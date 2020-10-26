@@ -10,7 +10,11 @@ const {
   signup,
   logout,
 } = require("../controllers/gen.controller");
-const { routerMiddleware, checkAuthentication } = require("../config/helper");
+const {
+  routerMiddleware,
+  checkAuthentication,
+  pageNotFound,
+} = require("../config/helper");
 
 router.use(routerMiddleware);
 
@@ -23,6 +27,8 @@ router.post("/profile/update/:id", updateProfile);
 router.get("/blog/:id", blog);
 
 router.post("/blog/create", createBlog);
+
+router.post("/blog/update", updateBlog);
 
 router.post(
   "/signup",
@@ -37,12 +43,16 @@ router.post(
 router.post(
   "/login",
   passport.authenticate("local", {
+    successFlash: true,
     successRedirect: "/",
+    successMessage: "Welcome!",
     failureRedirect: "/",
     failureFlash: true,
   })
 );
 
 router.get("/logout", logout);
+
+router.use(pageNotFound);
 
 module.exports = router;
