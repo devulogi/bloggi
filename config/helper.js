@@ -11,7 +11,7 @@ module.exports = {
     res.locals.currentUser = req.user;
     res.locals.errors = req.flash("error");
     res.locals.infos = req.flash("info");
-    res.locals.sucessess = req.flash("success");
+    res.locals.successess = req.flash("success");
     next();
   },
 };
