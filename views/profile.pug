@@ -39,5 +39,6 @@ block contents
             if blogs
               each blog in blogs
                 option(value=`${blog._id}`)= blog.title
+          small.text-muted Select your blog to edit in the drop down.
           button.mt-3.btn.btn-secondary(type="submit") Update Blog
   script(src="script.js")
