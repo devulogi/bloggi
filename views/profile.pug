@@ -7,16 +7,39 @@ block contents
           | #{success}
           button.close(type='button' data-dismiss='alert' aria-label='Close')
             span(aria-hidden='true') &times;
-    form(action="/blog/create" method="post")
-      .form-group
-        label(for="title") Title: 
-        input.form-control#title(name="title" required autofocus)
-        input(name="id" hidden value=`${currentUser._id}`)
-      .form-group
-        label(for="description") Description:
-        textarea#description.form-control(name="description", required, cols="30", rows="3")
-      .form-group
-        textarea#summernote(name="content" required)
-      button.btn.btn-success Submit
-block scripts
+    .row
+      .col-sm-12.col-md-12.col-lg-8
+        form(action="/blog/create" method="post")
+          .form-group
+            label(for="title") Title: 
+            input.form-control#title(name="title" required autofocus)
+            input(name="id" hidden value=`${currentUser._id}`)
+          .form-group
+            label(for="description") Description:
+            textarea#description.form-control(name="description", required, cols="30", rows="3")
+          .form-group
+            textarea#summernote(name="content" required)
+          button.btn.btn-success Submit  
+      .col-sm-12.col-md-12.col-lg-4.mt-3
+        .card
+          .card-body
+            h5.card-title Profile
+            small.text-dark Username: 
+              span.text-muted #{currentUser.username}
+            br
+            small Status: 
+              span.text-success Active
+            br 
+            small Created: 
+              span.text-muted #{currentUser.createdAt}
+        .card.mt-3.mb-3
+          .card-body 
+            form.mt-3(action="/profile/update", method="post")
+              .form-group
+                small Username: 
+                input.form-control(name="username" required)
+              .form-group
+                small Password:
+                input.form-control(name="password" required)
+              button.btn.btn-secondary(type="submit") Update Profile
   script(src="script.js")
