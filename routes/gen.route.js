@@ -8,23 +8,9 @@ const {
   signup,
   logout,
 } = require("../controllers/gen.controller");
+const { routerMiddleware, checkAuthentication } = require("../config/helper");
 
-function checkAuthentication(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    req.flash("info", "You must be logged in to comment.");
-    res.redirect("/");
-  }
-}
-
-router.use(function (req, res, next) {
-  res.locals.currentUser = req.user;
-  res.locals.errors = req.flash("error");
-  res.locals.infos = req.flash("info");
-  res.locals.sucessess = req.flash("success");
-  next();
-});
+router.use(routerMiddleware);
 
 router.get("/", index);
 
@@ -38,12 +24,9 @@ router.post(
   "/signup",
   signup,
   passport.authenticate("local", {
-    successFlash: true,
-    successMessage: "Success! 🐈",
     successRedirect: "/",
-    failureFlash: true,
-    failureMessage: "Opps! try again ☕",
     failureRedirect: "/",
+    failureFlash: true,
   })
 );
 
