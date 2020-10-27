@@ -1,15 +1,12 @@
 const router = require("express").Router();
 const passport = require("passport");
+const { index, signup, logout } = require("../controllers/gen.controller");
+const { profile, updateProfile } = require("../controllers/profile.controller");
 const {
-  index,
-  profile,
-  updateProfile,
   blog,
   createBlog,
   updateBlog,
-  signup,
-  logout,
-} = require("../controllers/gen.controller");
+} = require("../controllers/blog.controller");
 const {
   routerMiddleware,
   checkAuthentication,
@@ -35,6 +32,7 @@ router.post(
   signup,
   passport.authenticate("local", {
     successRedirect: "/",
+    successFlash: true,
     failureRedirect: "/",
     failureFlash: true,
   })
@@ -43,9 +41,8 @@ router.post(
 router.post(
   "/login",
   passport.authenticate("local", {
-    successFlash: true,
     successRedirect: "/",
-    successMessage: "Welcome!",
+    successFlash: true,
     failureRedirect: "/",
     failureFlash: true,
   })
