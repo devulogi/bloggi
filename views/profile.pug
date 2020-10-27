@@ -3,37 +3,44 @@ block contents
   .container
     include includes/flash.component.pug
     .row
-      .col-sm-12.col-md-12.col-lg-8
-        //- create a blog form
-        form(action="/blog/create" method="post")
-          .form-group
-            label(for="title") Title: 
-            input.form-control#title(name="title" required autofocus)
-            input(name="id" hidden value=`${currentUser._id}`)
-          .form-group
-            label(for="description") Description:
-            textarea#description.form-control(name="description", required, cols="30", rows="3")
-          .form-group
-            textarea#summernote(name="content" required)
-          button.btn.btn-success Submit  
-      .col-sm-12.col-md-12.col-lg-4.mt-3
-        //- reset profile form 
-        .card.mt-3.mb-3
-          .card-body 
-            form.mt-3(action=`/profile/update/${currentUser._id}`, method="post")
+      .col-lg-2
+        #v-pills-tab.nav.flex-column.nav-pills(role='tablist' aria-orientation='vertical')
+          a#v-pills-home-tab.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Create a Post
+          a#v-pills-profile-tab.nav-link(data-toggle='pill' href='#v-pills-profile' role='tab' aria-controls='v-pills-profile' aria-selected='false') Profile
+      .col-lg-8
+        #v-pills-tabContent.tab-content
+          #v-pills-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='v-pills-home-tab') 
+            //- create a blog form
+            form(action="/blog/create" method="post")
               .form-group
-                small Username: 
-                input.form-control(name="username" required)
+                label(for="title") Title: 
+                input.form-control#title(name="title" required autofocus)
+                input(name="id" hidden value=`${currentUser._id}`)
               .form-group
-                small Password:
-                input.form-control(name="password" type="password" required)
-              button.btn.btn-secondary(type="submit") Update Profile
-          //- select blog to edit 🆘
-        form.mb-3(action="/blog/update"  method="post")
-          select.custom-select.custom-select-lg(name="blogID")
-            if blogs
-              each blog in blogs
-                option(value=`${blog._id}`)= blog.title
-          small.text-muted Select your blog to edit in the drop down.
-          button.mt-3.btn.btn-secondary(type="submit") Update Blog
+                label(for="description") Description:
+                textarea#description.form-control(name="description", required, cols="30", rows="3")
+              .form-group
+                textarea#summernote(name="content" required)
+              button.btn.btn-success Submit 
+          #v-pills-profile.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-profile-tab') 
+            //- reset profile form 
+            .card.mt-3.mb-3
+              .card-body 
+                form(action=`/profile/update/${currentUser._id}`, method="post")
+                  .form-group
+                    small Username: 
+                    input.form-control(name="username" required)
+                  .form-group
+                    small Password:
+                    input.form-control(name="password" type="password" required)
+                  button.btn.btn-secondary(type="submit") Update Profile
+              //- select blog to edit 🆘
+            form.mb-3(action="/blog/update"  method="post")
+              select.custom-select.custom-select-lg(name="blogID")
+                if blogs
+                  each blog in blogs
+                    option(value=`${blog._id}`)= blog.title
+              small.text-muted Select your blog to edit in the drop down.
+              br
+              button.mt-3.btn.btn-secondary(type="submit") Update Blog        
   script(src="script.js")
