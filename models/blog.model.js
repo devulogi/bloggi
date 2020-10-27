@@ -14,6 +14,12 @@ const BlogSchema = new Schema({
     type: String,
     required: true,
   },
+  tag: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
   author: {
     type: Schema.Types.ObjectId,
     ref: "user",
