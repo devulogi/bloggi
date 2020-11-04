@@ -33,7 +33,24 @@ const updateProfile = function (req, res, next) {
   });
 };
 
+const deleteProfile = function (req, res, next) {
+  User.findOne({ _id: req.params.profileID }, function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    User.findOneAndRemove({ _id: user._id }, function (err, user) {
+      if (err) {
+        return next(err);
+      }
+      req.flash("success", "Profile does not exist anymore.");
+      req.logout();
+      return res.status(204).redirect("/");
+    });
+  });
+};
+
 module.exports = {
   profile,
   updateProfile,
+  deleteProfile,
 };
