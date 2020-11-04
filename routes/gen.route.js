@@ -17,22 +17,23 @@ const {
   pageNotFound,
 } = require("../config/helper");
 
+// runs everytime route is visited
 router.use(routerMiddleware);
 
+// index
 router.get("/", index);
 
+// profile routes
 router.get("/profile", checkAuthentication, profile);
-
 router.post("/profile/update/:id", updateProfile);
-
 router.get("/profile/delete/:profileID", deleteProfile);
 
+// blog routes
 router.get("/blogs/:id", getBlogPage);
-
 router.post("/blogs", createBlog);
-
 router.post("/blogs/:id", updateBlog);
 
+// sign-up
 router.post(
   "/signup",
   signup,
@@ -44,6 +45,7 @@ router.post(
   })
 );
 
+// log-in
 router.post(
   "/login",
   passport.authenticate("local", {
@@ -54,8 +56,10 @@ router.post(
   })
 );
 
+// log-out
 router.get("/logout", logout);
 
+// page not found!
 router.use(pageNotFound);
 
 module.exports = router;
