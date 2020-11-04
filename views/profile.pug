@@ -7,17 +7,18 @@ block contents
         #v-pills-tab.nav.flex-column.nav-pills(role='tablist' aria-orientation='vertical')
           a#v-pills-home-tab.nav-link.active(data-toggle='pill' href='#v-pills-home' role='tab' aria-controls='v-pills-home' aria-selected='true') Create a Post
           a#v-pills-profile-tab.nav-link(data-toggle='pill' href='#v-pills-profile' role='tab' aria-controls='v-pills-profile' aria-selected='false') Profile
+          a#v-pills-blogs-tab.nav-link(data-toggle='pill' href='#v-pills-blogs' role='tab' aria-controls='v-pills-blogs' aria-selected='false') Blogs
       .col-lg-8
         #v-pills-tabContent.tab-content
           #v-pills-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='v-pills-home-tab') 
             //- create a blog form
-            form(action="/blog/create" method="post")
+            form(action="/blogs" method="post")
               .form-group
-                label(for="title") Title: 
+                label.text-muted(for="title") Title: 
                 input.form-control#title(name="title" required autofocus)
                 input(name="id" hidden value=`${currentUser._id}`)
               .form-group
-                label(for="description") Description:
+                label.text-muted(for="description") Description:
                 textarea#description.form-control(name="description", required, cols="30", rows="3")
               .form-group
                 textarea#summernote(name="content" required)
@@ -28,19 +29,26 @@ block contents
               .card-body 
                 form(action=`/profile/update/${currentUser._id}`, method="post")
                   .form-group
-                    small Username: 
+                    small.text-muted Username: 
                     input.form-control(name="username" required)
                   .form-group
-                    small Password:
+                    small.text-muted Password:
                     input.form-control(name="password" type="password" required)
-                  button.btn.btn-secondary(type="submit") Update Profile
-              //- select blog to edit 🆘
-            form.mb-3(action="/blog/update"  method="post")
-              select.custom-select.custom-select-lg(name="blogID")
+                  button.btn.btn-secondary(type="submit") Update Profile 
+                  a.btn.btn-danger.text-white.ml-2(href=`/profile/delete/${currentUser._id}`) Delete Profile
+          #v-pills-blogs.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-blogs-tab') 
+            //- reset profile form 
+            table.table
+              thead.thead-light
+                h1 blog
+              tbody
                 if blogs
                   each blog in blogs
-                    option(value=`${blog._id}`)= blog.title
-              small.text-muted Select your blog to edit in the drop down.
-              br
-              button.mt-3.btn.btn-secondary(type="submit") Update Blog        
+                    tr
+                      td #{blog.title}
+                      td
+                        a.text-success(href=`/blogs/update/${blog._id}`) Update
+                      td
+                        a.text-danger(href=`/blogs/delete/${blog._id}`) Delete
+                      
   script(src="script.js")
