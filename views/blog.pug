@@ -9,4 +9,10 @@ block links
 block contents
   include includes/login.component.pug
   include includes/signup.component.pug
-  h1 Blog id: #{blog._id}
+  div
+    if currentUser
+      if currentUser._id.toString() === blog.author.toString()
+        a.text-muted(href=`/edit/${blog._id}`) Edit
+    h1 #{blog.title}
+    h3 #{blog.description}
+    | !{blog.content}
