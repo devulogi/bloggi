@@ -4,6 +4,7 @@ const session = require("express-session");
 const passport = require("passport");
 const flash = require("express-flash");
 const morgan = require("morgan");
+require("dotenv").config();
 
 const User = require("../models/user.model");
 
@@ -11,11 +12,11 @@ const Middlewares = function (app) {
   if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
   }
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.urlencoded({ limit: "50mb", extended: false }));
   app.use(cookieParser());
   app.use(
     session({
-      secret: "fasfs",
+      secret: process.env.SECRET,
       resave: true,
       saveUninitialized: true,
     })
