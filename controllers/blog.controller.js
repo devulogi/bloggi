@@ -52,7 +52,7 @@ const updateBlog = function (req, res, next) {
         { new: true },
         function (err, blog) {
           if (err) return next(err);
-          res.redirect("/");
+          res.redirect(`/blogs/${req.params.id}`);
         }
       );
     }
