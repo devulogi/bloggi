@@ -60,7 +60,7 @@ const updateBlog = function (req, res, next) {
 };
 
 const deleteBlog = function (req, res) {
-  Blog.findOneAndRemove({ _id: req.params._id }, { new: true }, function (
+  Blog.findOneAndRemove({ _id: req.params.id }, { new: true }, function (
     err,
     blog
   ) {
