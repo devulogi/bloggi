@@ -10,6 +10,8 @@ const {
   getBlogPage,
   createBlog,
   updateBlog,
+  deleteBlog,
+  getUpdateBlogPage,
 } = require("../controllers/blog.controller");
 const {
   routerMiddleware,
@@ -25,13 +27,18 @@ router.get("/", index);
 
 // profile routes
 router.get("/profile", checkAuthentication, profile);
-router.post("/profile/update/:id", updateProfile);
-router.get("/profile/delete/:profileID", deleteProfile);
+router.post("/profile/update/:id", checkAuthentication, updateProfile);
+router.get("/profile/delete/:profileID", checkAuthentication, deleteProfile);
 
 // blog routes
 router.get("/blogs/:id", getBlogPage);
-router.post("/blogs", createBlog);
-router.post("/blogs/:id", updateBlog);
+router.post("/blogs", checkAuthentication, createBlog);
+router
+  .route("/blogs/update/:id")
+  .all(checkAuthentication)
+  .get(getUpdateBlogPage)
+  .post(updateBlog);
+router.post("/blogs/delete/:id", checkAuthentication, deleteBlog);
 
 // sign-up
 router.post(
