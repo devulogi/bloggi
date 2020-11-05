@@ -21,7 +21,7 @@ block contents
                 label.text-muted(for="description") Description:
                 textarea#description.form-control(name="description", required, cols="30", rows="3")
               .form-group
-                textarea#summernote(name="content" required)
+                textarea.summernote(name="content" required)
               button.btn.btn-success Submit 
           #v-pills-profile.tab-pane.fade(role='tabpanel' aria-labelledby='v-pills-profile-tab') 
             //- reset profile form 
@@ -47,8 +47,10 @@ block contents
                     tr
                       td #{blog.title}
                       td
-                        a.text-success(href=`/blogs/update/${blog._id}`) Update
+                        form(action=`/blogs/update/${blog._id}` method="GET")
+                          button.btn.btn-success Update
                       td
-                        a.text-danger(href=`/blogs/delete/${blog._id}`) Delete
+                        form(action=`/blogs/delete/${blog._id}` method="POST")
+                          button.btn.btn-danger Delete
                       
   script(src="script.js")
