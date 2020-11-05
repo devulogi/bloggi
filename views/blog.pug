@@ -12,7 +12,7 @@ block contents
   div
     if currentUser
       if currentUser._id.toString() === blog.author.toString()
-        a.text-muted(href=`/edit/${blog._id}`) Edit
+        a.text-muted(href=`/blogs/update/${blog._id}`) Edit
     h1 #{blog.title}
     h3 #{blog.description}
     | !{blog.content}
