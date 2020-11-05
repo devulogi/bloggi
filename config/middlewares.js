@@ -1,5 +1,6 @@
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const methodOverride = require("method-override");
 const session = require("express-session");
 const passport = require("passport");
 const flash = require("express-flash");
@@ -9,6 +10,9 @@ require("dotenv").config();
 const User = require("../models/user.model");
 
 const Middlewares = function (app) {
+  app.use(methodOverride("X-HTTP-Method")); // Microsoft
+  app.use(methodOverride("X-HTTP-Method-Override")); // Google/GData
+  app.use(methodOverride("X-Method-Override")); // IBM
   if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
   }
