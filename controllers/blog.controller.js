@@ -30,24 +30,43 @@ const getBlogPage = function (req, res, next) {
   });
 };
 
+const getUpdateBlogPage = function (req, res, next) {
+  Blog.findOne({ _id: req.params.id }, function (err, blog) {
+    if (err) return next(err);
+    res.status(200).render("updateBlogPage", { blog });
+  });
+};
+
 const updateBlog = function (req, res, next) {
-  Blog.findOne({ _id: req.body.blogID })
-    .then(function (blog) {
-      res.send(blog);
-    })
-    .catch(function (err) {
-      next(err);
-    });
+  User.findOne({ _id: req.body.id }, function (err, user) {
+    if (err) return next(err);
+    if (!user) {
+      req.logout();
+      res.redirect("/");
+    }
+    if (user) {
+      console.log(req.params.id);
+      Blog.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        { new: true },
+        function (err, blog) {
+          if (err) return next(err);
+          res.redirect("/");
+        }
+      );
+    }
+  });
 };
 
 const deleteBlog = function (req, res) {
-  Blog.findOneAndRemove({ _id: req.params.id }, { new: true }, function (
+  Blog.findOneAndRemove({ _id: req.params._id }, { new: true }, function (
     err,
     blog
   ) {
     if (!err) {
       req.flash("success", "Blog deleted successfully!");
-      req.status(204).redirect("/");
+      res.status(204).redirect("/");
     }
   });
 };
@@ -57,4 +76,5 @@ module.exports = {
   getBlogPage,
   updateBlog,
   deleteBlog,
+  getUpdateBlogPage,
 };
