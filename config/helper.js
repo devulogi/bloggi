@@ -6,7 +6,7 @@ module.exports = {
     if (req.isAuthenticated()) {
       next();
     } else {
-      req.flash("info", "You must be logged in to comment.");
+      req.flash("error", "You must be authorized to do that.");
       res.redirect("/");
     }
   },
